@@ -1,99 +1,40 @@
 ---
 import Layout from "../layouts/Layout.astro"
-import { CldUploadWidget, CldImage } from "astro-cloudinary"
+import Section from "../components/Section.astro"
+import Illustration from "../media/Illustration.astro"
+import LofiSkull from "../media/LofiSkull.astro"
+import Ghost from "../media/Ghost.astro"
+import LofiStar from "../media/LofiStar.astro"
+import LofiStar2 from "../media/LofiStar-2.astro"
+import LofiStar3 from "../media/LofiStar-3.astro"
+import Image from "astro/components/Image.astro"
 
-import Button from "fulldev-ui/components/Button.astro"
-import Heading from "fulldev-ui/components/Heading.astro"
-
-import { getCollection } from "astro:content"
-const images = await getCollection("images")
 ---
 
 <Layout title="Cloudinary Hackathon">
-  <main>
-    <Heading color="brand" contrast={false}> Hackathon Cloudinary </Heading>
-    <CldUploadWidget
-      id="upload-widget"
-      uploadPreset="upload-unsigned-images"
-      options={{
-        sources: ["local"],
-        multiple: false,
-        maxFiles: 1,
-        language: "es",
-        text: {
-          es: {
-            or: "O",
-
-            menu: {
-              files: "Subir desde tu dispositivo",
-            },
-            local: {
-              browse: "Seleccionar",
-              dd_title_single: "Arrastra tu imagen aquí",
-            },
-          },
-        },
-      }}
-    >
-      <Button color="brand" as="button">Upload</Button>
-    </CldUploadWidget>
-    <ul>
-      {
-        images.map((image) => {
-          return (
-            <li>
-              <a href={`/photo?id=${image.data.public_id}`}>
-                <CldImage
-                  src={image.data.public_id}
-                  width={250}
-                  height={250}
-                  crop={{
-                    type: "fill",
-                    source: true,
-                  }}
-                />
-              </a>
-            </li>
-          )
-        })
-      }
-    </ul>
-  </main>
-
-  <script>
-    import { navigate } from "astro:transitions/client"
-
-    const widget = document.getElementById("upload-widget")
-
-    if (widget) {
-      widget.addEventListener("clduploadwidget:success", ((
-        e: CustomEvent<{ info: { public_id: string } }>
-      ) => {
-        const publicId = e.detail.info.public_id
-        navigate(`/photo?id=${publicId}`)
-      }) as EventListener)
-    }
-  </script>
-
-  <style>
-    main {
-      width: 800px;
-      margin: 0 auto;
-      padding-top: 100px;
-      text-align: center;
-    }
-
-    h2 {
-      margin-bottom: 32px;
-    }
-
-    ul {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 4px;
-      list-style: none;
-    }
-  </style>
-
-  <script></script>
+  <Section id="intro">
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-10 py-14">
+      <div class="text">
+        <h1 class="lg:max-w-[684px] max-w-[400px] xl:text-6xl lg:text-5xl text-4xl font-bold uppercase text-text leading-snug lg:leading-snug xl:leading-snug text-pretty mb-4 relative">
+          <div class="absolute -top-12 right-0">
+            <div class="relative">
+              <Ghost />
+              <LofiStar class="-top-10 right-0" />
+              <LofiStar2 class="bottom-0 -left-10" />
+              <LofiStar3 class="-bottom-4 -right-10" />
+            </div>
+          </div>
+          ¡Dale un toque <span class="text-accent">espeluznante</span>  a tus fotos!🎃
+        </h1>
+        <p class="text-text text-lg leading-normal text-pretty max-w-[450px] mb-7">Puedes añadir disfraces a personas o mascotas y colocarlos en fondos temáticos de Halloween. ¡Sencillo, rápido y muy divertido!</p>
+        <a href="/editor" class="inline-flex gap-4 items-center justify-center py-3 px-5 bg-accent text-text rounded-full">
+          <p class="text-lg font-bold uppercase">¡Empieza a Disfrazar!</p>
+          <LofiSkull />
+        </a>
+      </div>
+      <div class="illustration">
+        <Illustration />
+      </div>
+    </div>
+  </Section>
 </Layout>

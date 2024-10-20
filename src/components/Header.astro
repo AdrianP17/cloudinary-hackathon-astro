@@ -1,0 +1,24 @@
+---
+const links : {name: string, href: string}[] = [
+    {name: "Inicio", href: "/"},
+    {name: "Editor", href: "/editor"},
+    {name: "Fotos", href: "/fotos"}
+]
+---
+
+<header class="w-full py-8 px-10 flex items-center justify-between max-w-screen-2xl mx-auto">
+    <div class="hidden lg:block invisible w-32">
+    </div>
+    <div class="flex gap-5 text-accent font-semibold">
+        {links.map(link => <a class="uppercase" href={link.href}>{link.name}</a>)}
+    </div>
+    <div class="music p-3 flex gap-3 bg-text text-bg rounded-full font-bold">
+        <div>
+            <p class="uppercase">Music</p>
+        </div>
+        <div>
+            <p class="uppercase">ON</p>
+            <!-- <p class="uppercase">OFF</p> -->
+        </div>
+    </div>
+</header>
