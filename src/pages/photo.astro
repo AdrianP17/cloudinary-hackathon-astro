@@ -1,6 +1,7 @@
 ---
 import Button from "fulldev-ui/components/Button.astro"
 import Heading from "fulldev-ui/components/Heading.astro"
+import Section from "../components/Section.astro" 
 
 import { getCldImageUrl } from "astro-cloudinary/helpers"
 import Layout from "../layouts/Layout.astro"
@@ -15,53 +16,52 @@ console.log({ id, url })
 ---
 
 <Layout title="Cloudinary Photo">
-  <main data-id={id}>
-    <header>
-      <Heading color="brand" contrast={false}> Selecciona el tema </Heading>
-      <Button
-        class="add"
-        data-topic="ghost"
-        icon="ghost"
-        as="button"
-        color="brand"
-      >
-        ¡Añade fantasmas!
-      </Button>
-
-      <Button
-        class="add"
-        data-topic="zombies"
-        icon="grave-2"
-        as="button"
-        color="brand"
-      >
-        ¡GROAR ZOMBIES!
-      </Button>
-
-      <Button
-        class="add"
-        data-topic="devil"
-        icon="pentagram"
-        as="button"
-        color="brand"
-      >
-        ¡El diablo!
-      </Button>
-    </header>
-
-    <two-up>
-      <img id="original" src={url} />
-      <img id="preview" src={url} />
-    </two-up>
-
-    <small>{url}</small>
-
-    <div>
-      <Button class="download" icon="download" as="button" color="brand">
-        Descargar en Avif
-      </Button>
-    </div>
-  </main>
+  <Section id="photo" >
+    <main class="flex flex-col items-center justify-center" data-id={id}>
+      <header>
+        <Heading color="brand" contrast={false}> Selecciona el tema </Heading>
+        <button
+          class="p-4 rounded-xl text-text font-bold bg-accent"
+          data-topic="ghost"
+        >
+          ¡Añade fantasmas!
+      </button>
+  
+        <Button
+          class="add"
+          data-topic="zombies"
+          icon="grave-2"
+          as="button"
+          color="brand"
+        >
+          ¡GROAR ZOMBIES!
+        </Button>
+  
+        <Button
+          class="add"
+          data-topic="devil"
+          icon="pentagram"
+          as="button"
+          color="brand"
+        >
+          ¡El diablo!
+        </Button>
+      </header>
+  
+      <two-up>
+        <img id="original" src={url} />
+        <img id="preview" src={url} />
+      </two-up>
+  
+      <small>{url}</small>
+  
+      <div>
+        <btn class="download bg-accent p-4 rounded-xl cursor-pointer">
+          Descargar en Avif
+        </btn>
+      </div>
+    </main>
+  </Section>
 </Layout>
 
 <style>

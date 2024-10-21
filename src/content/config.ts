@@ -1,13 +1,11 @@
-// import { defineCollection } from "astro:content";
-// import { cldAssetsLoader } from "astro-cloudinary/loaders";
+import { defineCollection } from 'astro:content';
+import { cldAssetsLoader } from 'astro-cloudinary/loaders';
 
-// const images = defineCollection({
-//   loader: cldAssetsLoader({
-//     limit: 4,
-//     folder: 'adrian-folder'
-//   })
-// })
-
-// export const collections = {
-//   images
-// }
+export const collections = {
+  assets: defineCollection({
+    loader: cldAssetsLoader({
+      limit: 4,
+      folder: 'adrian-folder'
+    })
+  }),
+}

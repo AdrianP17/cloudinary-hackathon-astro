@@ -12,6 +12,8 @@
   "dependencies": {
     "@astrojs/check": "^0.9.4",
     "@astrojs/tailwind": "^5.1.2",
+    "@fontsource-variable/inter": "^5.1.0",
+    "@fontsource/creepster": "^5.1.0",
     "astro": "^4.15.12",
     "astro-cloudinary": "^1.1.2",
     "cloudinary-astro-halloween": "file:",

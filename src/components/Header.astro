@@ -2,7 +2,7 @@
 const links : {name: string, href: string}[] = [
     {name: "Inicio", href: "/"},
     {name: "Editor", href: "/editor"},
-    {name: "Fotos", href: "/fotos"}
+    {name: "Fotos", href: "/photo"}
 ]
 ---
 
@@ -10,7 +10,7 @@ const links : {name: string, href: string}[] = [
     <div class="hidden lg:block invisible w-32">
     </div>
     <div class="flex gap-5 text-accent font-semibold">
-        {links.map(link => <a class="uppercase" href={link.href}>{link.name}</a>)}
+        {links.map(link => <a class="uppercase font-creepster text-xl tracking-wider" href={link.href}>{link.name}</a>)}
     </div>
     <div class="music p-3 flex gap-3 bg-text text-bg rounded-full font-bold">
         <div>
