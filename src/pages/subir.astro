@@ -1,0 +1,135 @@
+---
+import { CldUploadWidget, CldImage } from "astro-cloudinary"
+import Layout from "../layouts/Layout.astro"
+import Section from "../components/Section.astro"
+import Card from "../components/Card.astro"
+import Ghost from "../media/Ghost.astro"
+import LofiStar from "../media/LofiStar.astro"
+import LofiStar2 from "../media/LofiStar-2.astro"
+import LofiStar3 from "../media/LofiStar-3.astro"
+import { getCollection } from "astro:content"
+const images = await getCollection("assets")
+console.log( images )
+---
+<Layout title="Cloudinary Hackathon">
+
+    <Section id="editor">
+      <h2 class="font-creepster w-fit mx-auto text-center text-4xl sm:text-5xl text-accent font-bold mb-5 relative">
+        <div class="absolute -top-12 -right-36">
+          <div class="relative">
+            <Ghost />
+            <LofiStar class="-top-10 right-0" />
+            <LofiStar2 class="bottom-0 -left-10" />
+            <LofiStar3 class="-bottom-4 -right-10" />
+          </div>
+        </div>
+        ¡Transforma tus fotos!
+      </h2>
+      <p class="text-text mb-12 text-pretty max-w-[600px] mx-auto leading-normal">Convierte a tus amigos, familiares en monstruos terroríficos con nuestra divertida herramienta de edición de Halloween. ¡Sigue estos sencillos pasos y comparte tu imagen espeluznante!</p>
+      <div class="card-container grid grid-cols-1 md:grid-cols-2 grid-rows-2 gap-10 max-w-[600px] mx-auto mb-10">
+        <Card>
+          <h3 class="font-creepster text-3xl text-accent/90 font-bold mb-2">Paso 1</h3>
+          <p class="text-text/60 text-pretty">Sube una foto directamente desde tu dispositivo.</p>
+        </Card>
+        <Card >
+          <h3 class="font-creepster text-3xl text-accent/90 font-bold mb-2">Paso 2</h3>
+          <p class="text-text/60 text-pretty">Elige el personaje de Halloween que más te guste.</p>
+        </Card>
+        <Card >
+          <h3 class="font-creepster text-3xl text-accent/90 font-bold mb-2">Paso 3</h3>
+          <p class="text-text/60 text-pretty">Añade un fondo aterrador para darle el toque final.</p>
+        </Card>
+        <Card >
+          <h3 class="font-creepster text-3xl text-accent/90 font-bold mb-2">Paso 4</h3>
+          <p class="text-text/60 text-pretty">Guarda tu creación y compártela para asustar a todos tus amigos.</p>
+        </Card>
+      </div>
+      <div class="max-w-[600px] flex items-center justify-center mx-auto">
+        <CldUploadWidget
+          id="upload-widget"
+          uploadPreset="upload-unsigned-images"
+        >
+          <button class="bg-accent text-bg py-4 px-6  text-2xl rounded-full cursor-pointer flex items-center justify-center font-creepster transition-shadow shadow-none hover:shadow-lg hover:shadow-accent/40">
+            Sube tu imagen
+          </button>
+        </CldUploadWidget>
+      </div>
+      <ul>
+        {
+          images.map((image) => {
+            return (
+              <li>
+                <a href={`/photo?id=${image.data.public_id}`}>
+                  <CldImage
+                    src={image.data.public_id}
+                    width={250}
+                    height={250}
+                    crop={{
+                      type: "fill",
+                      source: true,
+                    }}
+                  />
+                </a>
+              </li>
+            )
+          })
+        }
+      </ul>
+    </Section>
+      
+  
+    <script>
+      import { navigate } from "astro:transitions/client"
+      import { gsap } from "gsap"
+  
+      const widget = document.getElementById("upload-widget")
+  
+      if (widget) {
+        widget.addEventListener("clduploadwidget:success", ((
+          e: CustomEvent<{ info: { public_id: string } }>
+        ) => {
+          const publicId = e.detail.info.public_id
+          navigate(`/photo?id=${publicId}`)
+        }) as EventListener)
+      }
+
+  gsap.from('.card-container', {
+    opacity: 0,
+    y: 50,
+    duration: 1.5,
+    ease: 'power3.out',
+  })
+
+      gsap.to('#ghost', {
+    y: 10,
+    duration: 1,
+    repeat: -1,
+    yoyo: true,
+    ease: 'none',
+  })
+  gsap.to('#lofistar', {
+    rotate: 10,
+    scale: .8,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+    duration: 1
+  })
+  gsap.to('#lofistar-2', {
+    rotate: -10,
+    scale: .8,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+    duration: 1
+  })
+  gsap.to('#lofistar-3', {
+    rotate: 10,
+    scale: .8,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+    duration: 1
+  })
+    </script>
+  </Layout>

@@ -9,7 +9,6 @@ import LofiStar from "../media/LofiStar.astro"
 import LofiStar2 from "../media/LofiStar-2.astro"
 import LofiStar3 from "../media/LofiStar-3.astro"
 import Image from "astro/components/Image.astro"
-
 ---
 
 <Layout title="Cloudinary Hackathon">
@@ -27,10 +26,10 @@ import Image from "astro/components/Image.astro"
           </div>
           ¡Dale un toque <span class="text-accent">espeluznante</span>  a tus fotos!🎃
         </h1>
-        <p class="text-text font-light tracking-wide leading-normal text-pretty max-w-[450px] mb-7">Puedes añadir disfraces a personas o mascotas y colocarlos en fondos temáticos de Halloween. ¡Sencillo, rápido y muy divertido!</p>
-        <a href="/editor" class="font-creepster inline-flex gap-4 items-center justify-center py-3 px-5 bg-accent text-bg rounded-full">
+        <p class="text-text font-light tracking-wide leading-normal text-pretty max-w-[450px] mb-7">Puedes convertirte en un zombie, fantasma o lo que quieras!Además puedes elegir fondos temáticos de Halloween. ¡Sencillo, rápido y muy divertido!</p>
+        <a href="/subir" class="group font-creepster inline-flex gap-4 items-center justify-center py-3 px-5 bg-accent text-bg rounded-full transition-shadow shadow-none hover:shadow-lg hover:shadow-accent/40">
           <p class="text-xl tracking-wider font-bold uppercase">¡Empieza a Disfrazar!</p>
-          <LofiSkull />
+          <LofiSkull class="group-hover:-rotate-6 transition-transform"/>
         </a>
       </div>
       <div class="illustration">
@@ -39,3 +38,66 @@ import Image from "astro/components/Image.astro"
     </div>
   </Section>
 </Layout>
+
+<script>
+  import {gsap} from "gsap"
+
+  let tl = gsap.timeline()
+  tl.fromTo(".text", {opacity: 0, y: 50}, {opacity: 1,y: 0,ease: "power3.out" ,duration: 1})
+  .fromTo(".illustration", {opacity: 0, y: 50}, {opacity: 1, y: 0, duration: 1, ease: "power3.out"}, "-=0.5")
+
+  gsap.to('#ghost', {
+    y: 10,
+    duration: 1,
+    repeat: -1,
+    yoyo: true,
+    ease: 'none',
+  })
+  gsap.to('#lofistar', {
+    rotate: 10,
+    scale: .8,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+    duration: 1
+  })
+  gsap.to('#lofistar-2', {
+    rotate: -10,
+    scale: .8,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+    duration: 1
+  })
+  gsap.to('#lofistar-3', {
+    rotate: 10,
+    scale: .8,
+    ease: 'none',
+    repeat: -1,
+    yoyo: true,
+    duration: 1
+  })
+  gsap.to('#star-1',{
+    rotation: -20,
+    repeat: -1,
+    yoyo: true,
+    duration: 2,
+    repeatDelay: 3
+  })
+  gsap.to('#star-2',{
+    rotation: 20,
+    repeat: -1,
+    yoyo: true,
+    duration: 2,
+    repeatDelay: 3
+
+  })
+  gsap.to('#star-3',{
+    y: -20,
+    repeat: -1,
+    yoyo: true,
+    duration: 2,
+    repeatDelay: 3
+
+})
+</script>
