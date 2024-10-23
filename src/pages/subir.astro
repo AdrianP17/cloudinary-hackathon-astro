@@ -7,11 +7,8 @@ import Ghost from "../media/Ghost.astro"
 import LofiStar from "../media/LofiStar.astro"
 import LofiStar2 from "../media/LofiStar-2.astro"
 import LofiStar3 from "../media/LofiStar-3.astro"
-import { getCollection } from "astro:content"
-const images = await getCollection("assets")
-console.log( images )
 ---
-<Layout title="Cloudinary Hackathon">
+<Layout title="Creepy Photos">
 
     <Section id="editor">
       <h2 class="font-creepster w-fit mx-auto text-center text-4xl sm:text-5xl text-accent font-bold mb-5 relative">
@@ -41,7 +38,7 @@ console.log( images )
         </Card>
         <Card >
           <h3 class="font-creepster text-3xl text-accent/90 font-bold mb-2">Paso 4</h3>
-          <p class="text-text/60 text-pretty">Guarda tu creación y compártela para asustar a todos tus amigos.</p>
+          <p class="text-text/60 text-pretty">Guarda tu creación y compártela para asustar a todos tus amigos!</p>
         </Card>
       </div>
       <div class="max-w-[600px] flex items-center justify-center mx-auto">
@@ -54,27 +51,6 @@ console.log( images )
           </button>
         </CldUploadWidget>
       </div>
-      <ul>
-        {
-          images.map((image) => {
-            return (
-              <li>
-                <a href={`/photo?id=${image.data.public_id}`}>
-                  <CldImage
-                    src={image.data.public_id}
-                    width={250}
-                    height={250}
-                    crop={{
-                      type: "fill",
-                      source: true,
-                    }}
-                  />
-                </a>
-              </li>
-            )
-          })
-        }
-      </ul>
     </Section>
       
   

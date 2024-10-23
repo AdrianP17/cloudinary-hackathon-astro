@@ -2,6 +2,13 @@
 import Section from "../components/Section.astro";
 import Layout from "../layouts/Layout.astro";
 import { getCldImageUrl } from "astro-cloudinary/helpers";
+import zombie from "../media/lofi-Frankenstein.png";
+import ghost from "../media/lofi-Ghost-2.png";
+import vampire from "../media/lofi-lip.png";
+import bosque from "../media/bosque-tenebroso.webp";
+import casa from "../media/casa-aterradora.webp";
+import castillo from "../media/castillo-abandonado.webp";
+import cementerio from "../media/cementerio.webp";
 
 const { searchParams } = Astro.url;
 const id = searchParams.get("id");
@@ -11,32 +18,56 @@ if (id == null) return Astro.redirect("/");
 const url = getCldImageUrl({ src: id });
 ---
 
-<Layout title="Cloudinary Hackaton">
+<Layout title="Creepy Photos">
   <Section id="photo">
-    <main class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-center" data-id={id}>
+    <main class="grid grid-cols-1 md:grid-cols-2 gap-4 items-center justify-center max-w-screen-xl mx-auto" data-id={id}>
       <header>
-        <h2 class="text-accent max-w-[600px] text-pretty text-center font-creepster text-2xl md:text-4xl font-bold text-brand-500 mb-4">
-          ¡Dale un toque espeluznante a tu foto de Halloween!
+        <h2 class="text-accent max-w-[500px] mx-auto text-pretty text-center font-creepster text-4xl md:text-5xl font-bold text-brand-500 mb-4">
+          ¡Escoge tu transformación!
         </h2>
         <div class="flex flex-col items-center gap-4 mt-6">
           <label for="creatureSelect" class="text-lg font-light text-text">Elige tu transformación:</label>
-          <select id="creatureSelect" class="p-2 border rounded-md w-64 mb-6">
-            <option value="zombie">Zombi</option>
-            <option value="vampire">Vampiro</option>
-            <option value="wolfman">Hombre lobo</option>
-            <option value="ghost">Fantasma</option>
-          </select>
-          <label for="backgroundSelect" class="text-lg font-light text-text">Elige un fondo de Halloween:</label>
-          <select id="backgroundSelect" class="p-2 border rounded-md w-64 mb-6">
-            <option value="">Sin fondo</option>
-            <option value="haunted-house">Casa embrujada</option>
-            <option value="spooky-forest">Bosque tenebroso</option>
-            <option value="pumpkin-patch">Campo de calabazas</option>
-            <option value="graveyard">Cementerio oscuro</option>
-            <option value="abandoned-castle">Castillo abandonado</option>
-            <option value="foggy-swamp">Pantano con niebla</option>
-          </select>
-          <button id="applyChanges" class="font-creepster p-4 text-xl rounded-full bg-accent">
+          <div class="grid grid-cols-3 gap-4">
+            <label class="selectable flex flex-col items-center cursor-pointer">
+              <input type="radio" name="creature" value="zombified version of the person" checked class="hidden">
+              <img src={zombie.src} alt="Zombie" class="w-20 h-20 aspect-square hover:opacity-80">
+              <p class="text-text font-creepster uppercase mt-2 text-center">ZOMBIE</p>
+            </label>
+            <label class="selectable flex flex-col items-center cursor-pointer">
+              <input type="radio" name="creature" value="vampire version of the person" class="hidden">
+              <img src={vampire.src} alt="Vampire" class="w-20 h-20 aspect-square hover:opacity-80">
+              <p class="text-text font-creepster uppercase mt-2 text-center">VAMPIRO</p>
+            </label>
+            <label class="selectable flex flex-col items-center cursor-pointer">
+              <input type="radio" name="creature" value="ghost version of the person" class="hidden">
+              <img src={ghost.src} alt="Ghost" class="w-20 h-20 aspect-square hover:opacity-80">
+              <p class="text-text font-creepster uppercase mt-2 text-center">FANTASMA</p>
+            </label>
+          </div>
+          <label for="backgroundSelect" class="text-lg font-light text-text mt-6">Elige un fondo de Halloween:</label>
+          <div class="w-full grid grid-cols-2 gap-4">
+            <label class="selectable flex items-center justify-center cursor-pointer border border-gray-300 p-4 rounded-lg hover:opacity-80">
+              <input type="radio" name="background" value="" checked class="hidden">
+              <span class="text-text font-creepster uppercase p-4">Sin Fondo</span>
+            </label>
+            <label class="selectable">
+              <input type="radio" name="background" value="abandoned haunted house" class="hidden">
+              <img src={casa.src} alt="Casa embrujada" class="aspect-video w-full object-cover cursor-pointer hover:opacity-80 rounded-lg">
+            </label>
+            <label class="selectable">
+              <input type="radio" name="background" value="spooky forest" class="hidden">
+              <img src={bosque.src} alt="Bosque tenebroso" class="aspect-video w-full object-cover cursor-pointer hover:opacity-80 rounded-lg">
+            </label>
+            <label class="selectable">
+              <input type="radio" name="background" value="graveyard at night" class="hidden">
+              <img src={cementerio.src} alt="Cementerio oscuro" class="aspect-video w-full object-cover cursor-pointer hover:opacity-80 rounded-lg">
+            </label>
+            <label class="selectable">
+              <input type="radio" name="background" value="abandoned castle" class="hidden">
+              <img src={castillo.src} alt="Castillo abandonado" class="aspect-video w-full object-cover cursor-pointer hover:opacity-80 rounded-lg">
+            </label>
+          </div>
+          <button id="applyChanges" class="font-creepster p-4 text-xl text-text rounded-full bg-accent transition-shadow shadow-none hover:shadow-lg hover:shadow-accent/40 mt-6">
             Aplicar Cambios
           </button>
         </div>
@@ -47,17 +78,31 @@ const url = getCldImageUrl({ src: id });
           <img id="preview" src={url} alt="Preview Image" class="" />
         </two-up>
         <div class="flex gap-4 mt-6 justify-center items-center">
-          <button class="download font-creepster  text-bg bg-text p-4 rounded-xl cursor-pointer"
-            >Descargar</button
-          >
-          <button id="share" class=" font-creepster text-bg bg-text p-4 rounded-xl cursor-pointer"
-            >Compartir</button
-          >
-      </div>
+          <button class="download font-creepster text-bg bg-text p-4 rounded-xl cursor-pointer">
+            Descargar
+          </button>
+        </div>
       </div>
     </main>
   </Section>
 </Layout>
+
+<style>
+  .selectable {
+    position: relative;
+    border: 2px solid transparent;
+    border-radius: 8px;
+    transition: border-color 0.3s;
+  }
+
+  .selectable input[type="radio"]:checked + img,
+  .selectable input[type="radio"]:checked + span {
+    border: 2px solid #ff6f61;
+    border-radius: 8px;
+  }
+
+</style>
+
 
 <script>
   import { getCldImageUrl } from "astro-cloudinary/helpers";
@@ -65,30 +110,25 @@ const url = getCldImageUrl({ src: id });
 
   const id = document.querySelector("main")?.getAttribute("data-id") ?? "";
   const preview = document.getElementById("preview") as HTMLImageElement;
-   const downloadButton = document.querySelector(
-    ".download"
-  ) as HTMLButtonElement
-  const creatureSelect = document.getElementById(
-    "creatureSelect"
-  ) as HTMLSelectElement;
-  const backgroundSelect = document.getElementById(
-    "backgroundSelect"
-  ) as HTMLSelectElement;
-  const applyChangesButton = document.getElementById(
-    "applyChanges"
-  ) as HTMLButtonElement;
+  const downloadButton = document.querySelector(".download") as HTMLButtonElement;
+  const applyChangesButton = document.getElementById("applyChanges") as HTMLButtonElement;
+
+  // Obtener las opciones seleccionadas con tipado explícito
+  const getSelectedValue = (name: string): string => {
+    const selected = document.querySelector(`input[name="${name}"]:checked`) as HTMLInputElement | null;
+    return selected ? selected.value : "";
+  };
 
   applyChangesButton.addEventListener("click", () => {
-    const creature = creatureSelect.value;
-    const background = backgroundSelect.value;
+    const creature = getSelectedValue("creature");
+    const background = getSelectedValue("background");
 
     const transformations = {
-      replace: { from: "person", to: creature, preserveGeometry: true },
       replaceBackground: background ? { prompt: background } : undefined,
-      improve: true
+      replace: { from: "person", to: creature, preserveGeometry: true },
     };
 
-    const url = getCldImageUrl({ src: id, ...transformations });
+    const url = getCldImageUrl({ src: id, ...transformations, format: "avif" });
 
     preview.style.opacity = ".3";
 
@@ -96,14 +136,22 @@ const url = getCldImageUrl({ src: id });
     preview.onload = () => {
       preview.style.opacity = "1";
     };
-    preview.src = url;
   });
-  downloadButton.addEventListener("click", (e) => {
-    const url = getCldImageUrl({ src: id, format: "avif" })
 
-    const a = document.createElement("a")
-    a.href = url
-    a.download = "image.avif"
-    a.click()
-  })
+  downloadButton.addEventListener("click", () => {
+    const creature = getSelectedValue("creature");
+    const background = getSelectedValue("background");
+
+    const transformations = {
+      replace: { from: "person", to: creature, preserveGeometry: true },
+      replaceBackground: background ? { prompt: background } : undefined,
+    };
+
+    const url = getCldImageUrl({ src: id, ...transformations, format: "avif" });
+
+    const a = document.createElement("a");
+    a.href = url;
+    a.download = "image.avif";
+    a.click();
+  });
 </script>

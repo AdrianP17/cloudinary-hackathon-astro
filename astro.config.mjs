@@ -4,12 +4,16 @@ import fulldev from 'fulldev-ui/integration'
 
 import tailwind from '@astrojs/tailwind';
 
+import netlify from '@astrojs/netlify';
+
 // https://astro.build/config
 export default defineConfig({
   output: 'server',
+
   experimental: {
     contentLayer: true
   },
+
   integrations: [fulldev({
     colors: {
       theme: 'dark',
@@ -19,5 +23,7 @@ export default defineConfig({
         brand: '#f50'
       }
     }
-  }), tailwind()]
+  }), tailwind()],
+
+  adapter: netlify()
 });

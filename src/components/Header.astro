@@ -1,71 +1,73 @@
 ---
-const links : {name: string, href: string}[] = [
-    {name: "Inicio", href: "/"},
-    {name: "Subir", href: "/subir"},
-]
+const links: { name: string, href: string }[] = [
+    { name: "Inicio", href: "/" },
+    { name: "Subir", href: "/subir" },
+];
 ---
 
 <header class="w-full py-8 px-10 flex items-center justify-between max-w-screen-2xl mx-auto">
-    <div class="hidden lg:block invisible w-32">
+    <div class="hidden lg:block invisible w-32"></div>
+    <div class="flex gap-5 text-accent/90 font-semibold">
+        {links.map(link => (
+            <a class="uppercase font-creepster text-xl tracking-wider" href={link.href}>{link.name}</a>
+        ))}
     </div>
-    <div class="flex gap-5 text-text font-semibold">
-        {links.map(link => <a class="uppercase font-creepster text-xl tracking-wider" href={link.href}>{link.name}</a>)}
-    </div>
-    <button class="music p-3 flex gap-3 bg-text text-bg rounded-full font-bold cursor-pointer">
+    <button id="music-toggle" class="music py-2 px-3 flex gap-3 bg-accent/40 text-text rounded-full font-semibold cursor-pointer">
         <div>
             <p class="uppercase">Music</p>
         </div>
-        <div>
-            <p class="uppercase">ON</p>
-            <!-- <p class="uppercase">OFF</p> -->
+        <div id="music-status" class="uppercase text-accent">
+            <!-- ON / OFF -->
         </div>
     </button>
 </header>
 
 <script>
-  const musicButton = document.querySelector(".music")
-  const audioElement = document.querySelector("audio") as HTMLAudioElement
-  audioElement.volume = 0.05
-  const isPlaying = localStorage.getItem("isPlaying") === "false"
+    const musicButton = document.getElementById("music-toggle");
+    const audioElement = document.querySelector("audio") as HTMLAudioElement;
+    audioElement.volume = 0.05;
 
-  if (musicButton && audioElement) {
-    if (isPlaying) {
-      audioElement.play()
+    const updateMusicStatus = () => {
+        const isPlaying = !audioElement.paused;
+        const musicStatusElement = document.getElementById("music-status");
+        if (musicStatusElement) {
+            musicStatusElement.textContent = isPlaying ? "ON" : "OFF";
+        }
+    };
+
+    // Cargar estado de reproducción al iniciar la página
+    document.addEventListener("DOMContentLoaded", () => {
+        const isPlaying = localStorage.getItem("isPlaying") === "true";
+        const currentTime = localStorage.getItem("currentTime");
+
+        if (currentTime) {
+            audioElement.currentTime = parseFloat(currentTime);
+        }
+
+        if (isPlaying) {
+            audioElement.play();
+        }
+
+        updateMusicStatus();
+    });
+
+    // Manejar el botón de música
+    if (musicButton && audioElement) {
+        musicButton.addEventListener("click", () => {
+            if (audioElement.paused) {
+                audioElement.play();
+                localStorage.setItem("isPlaying", "true");
+            } else {
+                audioElement.pause();
+                localStorage.setItem("isPlaying", "false");
+            }
+
+            updateMusicStatus();
+        });
+
+        // Guardar el tiempo actual de reproducción al salir de la página
+        window.addEventListener("beforeunload", () => {
+            localStorage.setItem("currentTime", String(audioElement.currentTime));
+        });
     }
-
-    musicButton.addEventListener("click", () => {
-  if (audioElement.paused) {
-    audioElement.play()
-    localStorage.setItem("isPlaying", "true")
-  } else {
-    audioElement.pause()
-    localStorage.setItem("isPlaying", "false")
-  }
-})
-
-// Al cambiar de página
-window.addEventListener("beforeunload", () => {
-  localStorage.setItem("currentTime", String(audioElement.currentTime))
-})
-
-
-// Al cargar la página
-document.addEventListener("DOMContentLoaded", () => {
-  const isPlaying = localStorage.getItem("isPlaying") === "true"
-  const currentTime = localStorage.getItem("currentTime")
-
-  if (isPlaying) {
-    audioElement.play()
-  }
-
-  if (currentTime) {
-    audioElement.currentTime = parseFloat(currentTime)
-  }
-})
-  }
-
-  window.addEventListener("beforeunload", () => {
-  localStorage.setItem("currentTime", String(audioElement.currentTime))
-})
-
 </script>
