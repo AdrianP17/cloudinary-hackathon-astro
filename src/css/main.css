@@ -3,3 +3,14 @@
 
   color: #221913;
 }
+.text{
+  visibility: hidden;
+}
+
+.illustration{
+  visibility: hidden;
+}
+
+.card-container{
+  visibility: hidden;
+}

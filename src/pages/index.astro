@@ -42,9 +42,10 @@ import Image from "astro/components/Image.astro"
 <script>
   import {gsap} from "gsap"
 
-  let tl = gsap.timeline()
-  tl.fromTo(".text", {opacity: 0, y: 50}, {opacity: 1,y: 0,ease: "power3.out" ,duration: 1})
-  .fromTo(".illustration", {opacity: 0, y: 50}, {opacity: 1, y: 0, duration: 1, ease: "power3.out"}, "-=0.5")
+  function init() {
+    let tl = gsap.timeline()
+  tl.from(".text", {opacity: 0, y: 50 , ease: "power3.out" ,duration: 1, autoAlpha: 0})
+  .from(".illustration", {opacity: 0, y: 50 , duration: 1, ease: "power3.out", autoAlpha: 0}, "-=0.5")
 
   gsap.to('#ghost', {
     y: 10,
@@ -100,4 +101,7 @@ import Image from "astro/components/Image.astro"
     repeatDelay: 3
 
 })
+  }
+  
+  window.addEventListener('load', init)
 </script>
